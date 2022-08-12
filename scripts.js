@@ -20,7 +20,7 @@ const getCustomTime = function () {
     if (isNaN(customValue) || customValue === 0 || customValue < 0)
         console.log("Invalid time value.");
     else if (customValue > 60)
-        alert("Minute should be under 60.");
+        alert("Minute value must be under 60.");
     else
         displayTime(customValue * 60);
 }
