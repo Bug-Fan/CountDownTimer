@@ -12,6 +12,7 @@ const setValue = function() {
 
 }
 
+//Detects custom time value if entered
 const getCustomTime = function () {
 
     const customValue = parseFloat(location.href.slice(location.href.indexOf('minutes=') + 8));
@@ -34,7 +35,6 @@ const showTime = function(diffTime, targetTime) {
     if (isZero(diffTime)) {
         document.body.style.background = 'red';
         clearInterval(timerId);
-        location.href = location.href.slice(0, location.href.indexOf("minutes="));
     }
     diffTime.setSeconds(diffTime.getSeconds() - 1)
     
