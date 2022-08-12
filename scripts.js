@@ -12,6 +12,18 @@ const setValue = function() {
 
 }
 
+const getCustomTime = function () {
+
+    const customValue = parseFloat(location.href.slice(location.href.indexOf('minutes=') + 8));
+
+    if (isNaN(customValue) || customValue === 0 || customValue < 0)
+        console.log("Invalid time value.");
+    else if (customValue > 60)
+        alert("Minute should be under 60.");
+    else
+        displayTime(customValue * 60);
+}
+
 //Modify the HTML document with the timer and the future time.
 const showTime = function(diffTime, targetTime) {
     
@@ -22,6 +34,7 @@ const showTime = function(diffTime, targetTime) {
     if (isZero(diffTime)) {
         document.body.style.background = 'red';
         clearInterval(timerId);
+        location.href = location.href.slice(0, location.href.indexOf("minutes="));
     }
     diffTime.setSeconds(diffTime.getSeconds() - 1)
     
@@ -42,13 +55,15 @@ const displayTime = function (secValue) {
     const targetTime = new Date();
 
     //Setting the time duration to be added to the current time and the time after the duration.
-    const timeDiff = setValue('timer__button', secValue).getAttribute('data-time') ?? 
-                     setValue('minutes').getAttribute('value');
+    const timeDiff = setValue('timer__button', secValue)?.getAttribute('data-time') ?? 
+                     secValue;
     diffTime.setSeconds(timeDiff);
     targetTime.setMilliseconds(targetTime.getMilliseconds() + timeDiff * 1000);
     
     //Running showtime function at each second for the duration entered or selected by user.
     timerId = setInterval(showTime, 1000, diffTime, targetTime);
     setTimeout(() => clearInterval(timerId), (timeDiff + 1) * 1000);
-
+    
 }
+
+document.addEventListener('DOMContentLoaded', getCustomTime);
